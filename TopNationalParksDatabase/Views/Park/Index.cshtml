@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Park>
+
+<h2>Top U.S. National Parks</h2>
+
+<div style="display: block">
+    <a href="/Park/InsertPark/">Create a New Park</a>
+</div>
+<table class="table">
+    <tr>
+        <th>Park ID</th>
+        <th>Name</th>
+        <th>Park Code</th>
+        <th>Phone Number</th>
+        <th>Email Address</th>
+        <th>Website</th>
+    </tr>
+
+    @foreach (var park in @Model)
+    {
+        <tr>
+            <td><a href=/Park/ViewPark/@park.ParkID>@park.ParkID</a></td>
+            <td>@park.FullName</td>
+            <td>@park.ParkCode</td>
+            <td>@park.PhoneNumber</td>
+            <td>@park.EmailAddress</td>
+            <td>@park.Website</td>
+        </tr>
+    }
+
+</table>
