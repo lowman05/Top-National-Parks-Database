@@ -2,6 +2,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using TopNationalParksDatabase;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +16,7 @@ builder.Services.AddScoped<IDbConnection>((s) =>
 });
 
 builder.Services.AddTransient<IParkRepository, ParkRepository>();
+builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
 
 var app = builder.Build();
 
@@ -35,6 +37,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}/{sortBy?}");
 
 app.Run();

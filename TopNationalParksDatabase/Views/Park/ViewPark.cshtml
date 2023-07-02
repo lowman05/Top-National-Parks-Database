@@ -1,6 +1,5 @@
-﻿@model Park
-
-<h3>@Model.FullName Information</h3>
+﻿
+@model Park
 
 <table class="table">
     <tr>
@@ -17,13 +16,20 @@
         <td>@Model.ParkCode</td>
         <td>@Model.PhoneNumber</td>
         <td>@Model.EmailAddress</td>
-        <td>@Model.Website</td>
+        <td><button type ="button" onclick="window.open('@Model.Website', '_blank')">Visit Park Website</button></td>
     </tr>
 </table>
 
+
 <div style="display: block">
-    <a href="/Park/UpdatePark/@Model.ParkID">Update this Park</a>
+
+    @using (Html.BeginForm("UpdatePark", "Park", "Post"))
+    {
+        <input type="hidden" asp-for="ParkID" value="@Model.ParkID" />
+        <input type="submit" onclick="return confirm('Are you sure?')" value="Update this park" />
+    }
 </div>
+<br />
 
 <div style="display: block">
 
@@ -33,3 +39,13 @@
         <input type="submit" onclick="return confirm('Are you sure?')" value="Delete this park" />
     }
 </div>
+<br />
+
+<div class="park-details">
+    <h2>@Model.FullName</h2>
+    <img src ="@Model.PhotoURL" alt="@Model.FullName" class="park-photo" />
+    </div>
+
+
+
+

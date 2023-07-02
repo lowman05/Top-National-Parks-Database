@@ -1,25 +1,52 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Net.WebSockets;
 using TopNationalParksDatabase.Models;
+using X.PagedList;
 
 namespace TopNationalParksDatabase.Controllers
 {
     public class ParkController : Controller
     {
         private readonly IParkRepository repo;
-        
+
         public ParkController(IParkRepository repo)
         {
             this.repo = repo;
         }
-        public IActionResult Index()
+        public IActionResult Index(string sortOrder, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             var parks = repo.GetAllParks();
-            return View(parks);
+            
+            switch(sortOrder)
+            {
+                case "name_desc":
+                    parks = parks.OrderByDescending(p => p.FullName);
+                    break;
+                default: 
+                    parks = parks.OrderBy(p => p.FullName);
+                    break;
+            }
+           return View (parks);
         }
 
-        public IActionResult ViewPark (int id)
+
+        //public IActionResult ViewPark (int id)
+        //{
+        //    var park = repo.GetPark(id);
+
+
+        //    return View(park);
+        //}
+        public IActionResult ViewPark(int id)
         {
             var park = repo.GetPark(id);
+           
+
             return View(park);
         }
 
@@ -56,5 +83,12 @@ namespace TopNationalParksDatabase.Controllers
             repo.DeletePark(park);
             return RedirectToAction("Index");
         }
+
+       
+
+        
+       
+
+        
     }
 }

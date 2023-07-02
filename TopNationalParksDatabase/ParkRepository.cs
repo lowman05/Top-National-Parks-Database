@@ -7,7 +7,7 @@ namespace TopNationalParksDatabase
     public class ParkRepository : IParkRepository
     {
         private readonly IDbConnection _conn;
-        public ParkRepository(IDbConnection conn) 
+        public ParkRepository(IDbConnection conn)
         {
             _conn = conn;
         }
@@ -36,7 +36,9 @@ namespace TopNationalParksDatabase
 
         public void DeletePark(Park park)
         {
-            _conn.Execute("DELETE FROM parks WHERE ParkID = @id;", new {id = park.ParkID});
+            _conn.Execute("DELETE FROM parks WHERE ParkID = @id;", new { id = park.ParkID });
+            _conn.Execute("DELETE FROM reviews WHERE ParkId=@id;", new { id = park.ParkID });
         }
-    }
+
+    }  
 }

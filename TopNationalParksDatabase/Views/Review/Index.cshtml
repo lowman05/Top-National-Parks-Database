@@ -1,0 +1,70 @@
+﻿@functions {
+    public static string RenderHikers(int rating)
+    {
+        string stars = string.Empty;
+        for (int i = 0; i <= 5; i++)
+        {
+            if (i <= rating)
+            {
+                stars += "<i class='fas fa-hiking'></i>";
+            }
+            else
+            {
+                stars += "<i class='far fa-hiking'></i>";
+            }
+        }
+        return stars;
+    }
+}
+
+@model IEnumerable<Review>
+
+<h2>Reviews</h2>
+<div style="display:block">
+    <a href="/Review/AddReview/" class="btn btn-outline-primary">Review A Park</a>
+</div>
+
+<div class="sorting">
+    <form action="/Review/Index" method="get">
+        <label for="sort">Sort By:</label>
+        <select id="sort" name="sortBy">
+            <option value="rating">Rating</option>
+            <option value="date">Date</option>
+            <option value="park name">Park Name</option>
+        </select>
+
+        <label for="sortOrder">Sort Order:</label>
+        <select id="sortOrder" name="sortOrder">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+
+        <button type="submit">Sort</button>
+    </form>
+</div>
+
+
+<table class="table">
+    <tr>
+        @*<th>Review ID</th>
+        <th>Park ID</th>*@
+        <th>Park Name</th>
+        <th>Name</th>
+        <th>Rating</th>
+        <th>Comments</th>
+        <th>Date</th>
+    </tr>
+    @foreach (var review in @Model)
+    {
+       <tr>
+        @*<td>@review.ReviewID</td>
+        <td>@review.ParkID</td>*@
+        <td>@review.ParkName</td>
+        <td>@review.Reviewer</td>
+        <td><span class="hiker @(review.Rating == 0 ? "empty-hiker" : "")">@Html.Raw(RenderHikers(review.Rating))</span></td>
+        <td>@review.Comments</td>
+        <td>@review.Date.ToString("MM-dd-yyyy")</td>
+       </tr>
+
+    }
+</table>

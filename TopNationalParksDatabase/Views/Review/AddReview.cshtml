@@ -1,0 +1,40 @@
+﻿@model Review
+
+
+<h2>Review A Park</h2>
+
+@using(Html.BeginForm("AddReviewToDatabase", "Review", "Post"))
+{
+    <div class="form-group">
+       <label for="">Select A Park</label>
+       <select class="form-control" name="ParkID" value="">
+            @foreach (var park in Model.Parks)
+            {
+                <option value ="@park.ParkID">@park.FullName</option>
+            }
+        </select>
+
+    </div>
+
+    <input asp-for="ReviewID" type ="hidden" value =""/>
+
+    <label asp-for="Reviewer" class="control-label">Name</label>
+    <input type="text" name ="Reviewer" class="form-control" value=""/>
+    <br />
+    <div>
+    <label asp-for="Rating" class="control-label">Rate From 0-5 Hikers</label>
+    <span class="rating">
+    <input type="number" step="1" min="0" max="5" name="Rating" class="form-control"/>
+    <i class="fas fa-hiking"></i>
+    </span>
+    </div>
+   <br />
+
+    <label asp-for="Comments" class="control-label">Leave Feedback For This Park</label>
+    <input type="text"  name="Comments" class="form-control"/>
+
+    <label asp-for="Date" class="control-label">Enter Today's Date</label>
+    <input type="date"  name="Date" class="form-control"/>
+    <br />
+    <input type ="submit" value="Create Review" class="btn btn-outline-primary"/>
+}

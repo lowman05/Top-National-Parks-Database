@@ -1,10 +1,14 @@
+﻿
+
 html {
   font-size: 14px;
+  
 }
 
 @media (min-width: 768px) {
   html {
     font-size: 16px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   }
 }
 
@@ -18,5 +22,91 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
+.rating {
+    position: relative;
+    display: inline-block;
+}
+
+    .rating i {
+        position: absolute;
+        top: 50%;
+        right: 40px;
+        color: forestgreen;
+        transform: translateY(-50%);
+    }
+
+   .hiker{
+        color: forestgreen;
+    }
+
+  .empty-hiker {
+        color: gray;
+    }
+
+.sorting{
+    margin-bottom: 10px;
+    text-align: right;
+}
+.sorting label{
+    margin-right: 10px;
+}
+
+.sorting select{
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.park-photo{
+    max-width: 100%;
+    height: auto;
+    border: solid;
+}
+
+
+#background-container {
+    background-image: url('images/grand canyon kw.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f8f8f8;
+    
+}
+
+
+
+
+
+
+
+th.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+    th.sortable:hover {
+        background-color: lightgray;
+    }
+
+    th.sortable.asc::after {
+        content: ' ▲';
+        display: inline-block;
+        margin-left: 5px;
+    }
+
+    th.sortable.desc::after {
+        content: ' ▼';
+        display: inline-block;
+        margin-left: 5px;
+    }
+
