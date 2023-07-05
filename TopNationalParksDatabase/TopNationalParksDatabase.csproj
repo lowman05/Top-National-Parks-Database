@@ -20,4 +20,10 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Park\Gallery.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

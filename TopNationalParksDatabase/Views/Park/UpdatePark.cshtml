@@ -1,5 +1,6 @@
 ﻿@model Park
-
+<body class="background">
+</body>
 <h2>Update @Model.FullName</h2>
 
 @using (Html.BeginForm("UpdateParkToDatabase", "Park", "Post"))
@@ -20,8 +21,8 @@
 
     <label asp-for="Website" class="control-label">Website</label>
     <input type="text" step="0.01" name="Website" class="form-control" value="@Model.Website" />
-
+    <br />  
     
-    <input type="submit" value="Update Park" class="btn btn-primary" />
+    <input type="submit" value="Update Park" class="btn btn-primary custom-btn" />
     
 }

@@ -8,6 +8,8 @@
         public int Rating { get; set; }
         public string Comments { get; set; }
         public DateTime Date { get; set; }
+
+
         public string ParkName { get; set; }
 
        public IEnumerable<Park> Parks { get; set; }

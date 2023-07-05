@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Park>
+<style>
+    .bg {
+        background-color: #a64418;
+    }
+</style>
+<body class = "background"></body>
+<h2>National Parks Photo Gallery</h2>
+<br />
+<div class="photo-gallery">
+   @foreach(var photo in Model)
+        {   
+            if(!string.IsNullOrEmpty(photo.PhotoURL))
+             { 
+                <img src="@photo.PhotoURL" alt="@photo.FullName" title="@photo.FullName" class="gallery-photo" style="width: 300px; height: 300px;" />
+              
+             }
+        }
+    
+</div>
+
+

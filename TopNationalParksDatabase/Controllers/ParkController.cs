@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using System.Net.WebSockets;
+
 using TopNationalParksDatabase.Models;
-using X.PagedList;
+
 
 namespace TopNationalParksDatabase.Controllers
 {
@@ -16,26 +14,14 @@ namespace TopNationalParksDatabase.Controllers
         {
             this.repo = repo;
         }
-        public IActionResult Index(string sortOrder, int? page)
-        {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            var parks = repo.GetAllParks();
-            
-            switch(sortOrder)
-            {
-                case "name_desc":
-                    parks = parks.OrderByDescending(p => p.FullName);
-                    break;
-                default: 
-                    parks = parks.OrderBy(p => p.FullName);
-                    break;
-            }
+        public IActionResult Index()
+        {       
+            var parks = repo.GetAllParks();           
+           
            return View (parks);
         }
 
-
-        //public IActionResult ViewPark (int id)
+        //public IActionResult ViewPark(int id)
         //{
         //    var park = repo.GetPark(id);
 
@@ -45,10 +31,20 @@ namespace TopNationalParksDatabase.Controllers
         public IActionResult ViewPark(int id)
         {
             var park = repo.GetPark(id);
-           
+            var previousParkId = repo.GetPreviousPark(id)?.ParkID;
+            var nextParkId = repo.GetNextPark(id)?.ParkID;
 
-            return View(park);
+            var parkViewModel = new ParkViewModel
+            {
+                Park = park,
+                PreviousParkId = previousParkId,
+                NextParkId = nextParkId
+            };
+
+            return View(parkViewModel);
         }
+
+
 
         public IActionResult UpdatePark(int id)
         {
@@ -84,11 +80,17 @@ namespace TopNationalParksDatabase.Controllers
             return RedirectToAction("Index");
         }
 
-       
+        public IActionResult Gallery()
+        {
+            var photos = repo.Gallery();
+            return View(photos);
+        }
 
-        
-       
 
-        
+
+
+
+
+
     }
 }

@@ -1,22 +1,26 @@
 ﻿
 @model IEnumerable<Park>
 
-<h2>Top U.S. National Parks</h2>
 
-<div style="display: block">
-    <a href="/Review/AddReview/" class="btn btn-outline-primary">Review A Park</a>
+
+    
+
+
+<h2>U.S. National Parks</h2>
+<br />  
+<body class="background"></body>
+<div class="button-container">
+    <a href="/Review/AddReview/" class="btn btn-outline-primary custom-btn">Review A Park</a>
+
+    <a href="/Park/InsertPark/" class="btn btn-outline-primary custom-btn">Add A Park</a>
 </div>
 <br />
-<div style="display: block">
-    <a href="/Park/InsertPark/" class="btn btn-outline-primary">Create a New Park</a>
-</div>
-<br />
 
 
-<table class="table table-bordered">
+<table class="table" id ="myTable">
     <tr>
-        <th>Park ID</th>
-        <th> @Html.ActionLink("Sort Parks By Name", "Index", new {sortOrder=ViewBag.NameSortParm})</th>
+        @*<th>Park ID</th>   *@   
+        <th onclick="sortTable(1)" class="sortable">Sort Parks By Name</th>
         <th>Park Code</th>
         <th>Phone Number</th>
         <th>Email Address</th>
@@ -26,13 +30,63 @@
     @foreach (var park in @Model)
     {
         <tr>
-            <td><a href="/Park/ViewPark/@park.ParkID" class="btn btn-outline-primary">@park.ParkID</a></td>
-            <td>@park.FullName</td>
+            @*<td><a href="/Park/ViewPark/@park.ParkID" class="btn btn-outline-primary custom-btn">@park.ParkID</a></td>*@
+            <td><a href="/Park/ViewPark/@park.ParkID" class="btn btn-outline-primary custom-btn">@park.FullName</a></td>
             <td>@park.ParkCode</td>
             <td>@park.PhoneNumber</td>
             <td>@park.EmailAddress</td>
-            <td><button type="button" onclick="window.open('@park.Website', '_blank')">Visit Park Website</button></td>
+            <td><button type="button" onclick="window.open('@park.Website', '_blank')" class="btn btn-outline-primary custom-btn">Visit Park Website</button></td>
         </tr>
     }
-
 </table>
+<script>
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("myTable");
+        switching = true;
+        
+        dir = "asc";
+       
+        while (switching) {
+            
+            switching = false;
+            rows = table.rows;
+          
+            for (i = 1; i < (rows.length-1); i++) {
+              
+                shouldSwitch = false;
+               
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+               
+                if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                       
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+               
+                rows[i].parentNode.insertBefore(rows[i],rows[i]);
+                switching = true;
+               
+               switchcount++;
+            } else {
+               
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }    
+
+</script>

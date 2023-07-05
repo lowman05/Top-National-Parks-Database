@@ -33,10 +33,18 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+
 app.UseAuthorization();
+app.UseRouting();
+
+
+
+
+
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}/{sortBy?}");
+
 
 app.Run();

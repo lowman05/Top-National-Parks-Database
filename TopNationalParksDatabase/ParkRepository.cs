@@ -19,7 +19,7 @@ namespace TopNationalParksDatabase
 
         public Park GetPark(int id)
         {
-            return _conn.QuerySingle<Park>("SELECT * FROM PARKS WHERE PARKID = @id", new { id = id });
+            return _conn.QuerySingle<Park>("SELECT * FROM PARKS WHERE ParkID = @id", new { id = id });            
         }
 
         public void UpdatePark(Park park)
@@ -40,5 +40,18 @@ namespace TopNationalParksDatabase
             _conn.Execute("DELETE FROM reviews WHERE ParkId=@id;", new { id = park.ParkID });
         }
 
+        public IEnumerable<Park> Gallery()
+        {
+            return _conn.Query<Park>("SELECT PhotoURL FROM PARKS");
+        }
+
+        public Park GetPreviousPark(int id)
+        {
+            return _conn.QueryFirstOrDefault<Park>("SELECT * FROM Parks WHERE ParkID < @id ORDER BY ParkID DESC LIMIT 1", new {id =id});
+        }
+        public Park GetNextPark(int id)
+        {
+            return _conn.QueryFirstOrDefault<Park>("SELECT * FROM Parks WHERE ParkID > @id ORDER BY ParkID ASC LIMIT 1", new { id = id});
+        }
     }  
 }

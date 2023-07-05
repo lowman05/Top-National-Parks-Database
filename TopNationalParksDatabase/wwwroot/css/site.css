@@ -1,8 +1,7 @@
-﻿
+
 
 html {
-  font-size: 14px;
-  
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
@@ -23,6 +22,7 @@ html {
 
 body {
     margin-bottom: 60px;
+    
 }
 
 .rating {
@@ -34,16 +34,16 @@ body {
         position: absolute;
         top: 50%;
         right: 40px;
-        color: forestgreen;
+        color: #4a7729;
         transform: translateY(-50%);
     }
 
-   .hiker{
-        color: forestgreen;
-    }
+.hiker {
+    color: #4a7729;
+}
 
-  .empty-hiker {
-        color: gray;
+  .gray-hiker {
+        color: black;
     }
 
 .sorting{
@@ -52,22 +52,27 @@ body {
 }
 .sorting label{
     margin-right: 10px;
+    
 }
 
 .sorting select{
     padding: 5px 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    background-color: cornsilk;
 }
-.park-photo{
+.park-photo {
     max-width: 100%;
     height: auto;
-    border: solid;
+    border: groove;
+    border-color: #a64418;
+    border-width: thick;
+    justify-content:center;
 }
 
 
 #background-container {
-    background-image: url('images/grand canyon kw.png');
+    background-image: url('images/huper-by-joshua-earle-lwyua42uml8-unsplash.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -83,30 +88,114 @@ body {
     
 }
 
-
-
-
-
-
-
 th.sortable {
     cursor: pointer;
     user-select: none;
+    
 }
 
     th.sortable:hover {
-        background-color: lightgray;
+        background-color: #a64418;
+        color: white;
     }
 
-    th.sortable.asc::after {
+    .sortable.asc::after {
         content: ' ▲';
         display: inline-block;
         margin-left: 5px;
     }
 
-    th.sortable.desc::after {
+    .sortable.desc::after {
         content: ' ▼';
         display: inline-block;
         margin-left: 5px;
     }
+
+.custom-btn {
+    background-color: #a64418 ;
+    outline: groove;
+    outline-color: cornsilk;
+    color: cornsilk;
+    border-radius:20px;
+    width: 167px;
+}
+
+    .custom-btn:hover {
+        background-color: #953D16;
+    }
+.background {
+    background-blend-mode: color; 
+    background-color: #d3bf9f;
+}
+
+.success-max2 {
+    background-color: forestgreen;
+    outline: none;
+    color: white;
+}
+
+.custom-btn a:hover{
+    color: white;
+    
+}
+.button-container{
+    display: flex;
+    justify-content: flex-start;
+    
+}
+
+.button-container .btn{
+    margin-left: 10px;
+  
+}
+
+}
+.photo-gallery{
+    display: grid;
+    grid-template-columns: repeat(autofit, minmax(300px, 1fr));
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+}
+   
+
+
+.table-hover {
+    color: #a64418;
+}
+
+.form-control{
+    background-color: cornsilk;
+    
+}
+
+h2{
+    text-align: center;
+}
+
+
+
+.form-control:focus{
+    background-color: cornsilk;
+}
+.button-container-pre-next {
+    display: flex;
+    justify-content: flex-end;
+   
+   
+}
+.button-container-pre-next .custom-btn{
+    margin-right: 10px;
+    
+}
+
+
+.button-container-pre-next .custom-btn i{
+    margin-right: 10px;
+    margin-left: 10px;
+    
+}
+
+.fas fa-chevron-left{
+    padding-right: 10px;
+}
 

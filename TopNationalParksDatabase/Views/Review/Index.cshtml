@@ -1,8 +1,8 @@
-﻿@functions {
+﻿@*@functions {
     public static string RenderHikers(int rating)
     {
         string stars = string.Empty;
-        for (int i = 0; i <= 5; i++)
+        for (int i = 1; i <= 5; i++)
         {
             if (i <= rating)
             {
@@ -15,13 +15,17 @@
         }
         return stars;
     }
-}
+}*@
 
 @model IEnumerable<Review>
 
-<h2>Reviews</h2>
+
+<body class="background">
+</body>
+<h2>National Park Reviews</h2>
+<br />  
 <div style="display:block">
-    <a href="/Review/AddReview/" class="btn btn-outline-primary">Review A Park</a>
+    <a href="/Review/AddReview/" class="btn btn-outline-primary custom-btn ">Review A Park</a>
 </div>
 
 <div class="sorting">
@@ -61,7 +65,13 @@
         <td>@review.ParkID</td>*@
         <td>@review.ParkName</td>
         <td>@review.Reviewer</td>
-        <td><span class="hiker @(review.Rating == 0 ? "empty-hiker" : "")">@Html.Raw(RenderHikers(review.Rating))</span></td>
+            <td>
+                @for (int i = 1; i <= 5; i++)
+                {
+                    <i class="@(i <= review.Rating ? "hiker" : "gray-hiker") fas fa-hiking"></i>
+                }
+            </td>
+
         <td>@review.Comments</td>
         <td>@review.Date.ToString("MM-dd-yyyy")</td>
        </tr>

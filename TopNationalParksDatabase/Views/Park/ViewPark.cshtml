@@ -1,9 +1,17 @@
-﻿
-@model Park
+﻿@*@model Park
+
+<style>
+    a, .nav-link {
+        color: rgba(255, 255, 255, .8);
+        text-decoration: none;
+        
+    }
+</style>
+
 
 <table class="table">
     <tr>
-        <th>Park ID</th>
+      
         <th>Name</th>
         <th>Park Code</th>
         <th>Phone Number</th>
@@ -11,24 +19,24 @@
         <th>Website</th>
     </tr>
     <tr>
-        <td>@Model.ParkID</td>
+       
         <td>@Model.FullName</td>
         <td>@Model.ParkCode</td>
         <td>@Model.PhoneNumber</td>
         <td>@Model.EmailAddress</td>
-        <td><button type ="button" onclick="window.open('@Model.Website', '_blank')">Visit Park Website</button></td>
+        <td><button type="button" onclick="window.open('@Model.Website', '_blank')" class="btn btn-outline-primary custom-btn">Visit Park Website</button></td>
     </tr>
 </table>
 
+<body class="background">
+</body>
 
-<div style="display: block">
 
-    @using (Html.BeginForm("UpdatePark", "Park", "Post"))
-    {
-        <input type="hidden" asp-for="ParkID" value="@Model.ParkID" />
-        <input type="submit" onclick="return confirm('Are you sure?')" value="Update this park" />
-    }
+<div class="btn btn-outline-primary custom-btn">
+    @Html.ActionLink("Update Park", "UpdatePark", "Park", new {id = Model.ParkID})
 </div>
+
+<br />
 <br />
 
 <div style="display: block">
@@ -36,15 +44,103 @@
     @using (Html.BeginForm("DeletePark", "Park", "Post"))
     {
         <input type="hidden" asp-for="ParkID" value="@Model.ParkID" />
-        <input type="submit" onclick="return confirm('Are you sure?')" value="Delete this park" />
+        <input type="submit" onclick="return confirm('Are you sure?')" class="btn btn-outline-danger" value="Delete Park" />
     }
 </div>
-<br />
+
+
+
 
 <div class="park-details">
     <h2>@Model.FullName</h2>
-    <img src ="@Model.PhotoURL" alt="@Model.FullName" class="park-photo" />
+    <img src="@Model.PhotoURL" alt="@Model.FullName" class="park-photo" />
+</div>
+*@
+
+@model ParkViewModel
+
+<style>
+    a, .nav-link {
+        color: rgba(255, 255, 255, .8);
+        text-decoration: none;
+    }
+</style>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Park Code</th>
+        <th>Phone Number</th>
+        <th>Email Address</th>
+        <th>Website</th>
+    </tr>
+    <tr>
+        <td>@Model.Park.FullName</td>
+        <td>@Model.Park.ParkCode</td>
+        <td>@Model.Park.PhoneNumber</td>
+        <td>@Model.Park.EmailAddress</td>
+        <td><button type="button" onclick="window.open('@Model.Park.Website', '_blank')" class="btn btn-outline-primary custom-btn">Visit Park Website</button></td>
+    </tr>
+</table>
+
+<body class="background">
+</body>
+
+<div class="btn btn-outline-primary custom-btn">
+    @Html.ActionLink("Update Park", "UpdatePark", "Park", new { id = Model.Park.ParkID })
+</div>
+
+<br />
+<br />
+
+<div style="display: block">
+    @using (Html.BeginForm("DeletePark", "Park", "Post"))
+    {
+        <input type="hidden" asp-for="Park.ParkID" value="@Model.Park.ParkID" />
+        <input type="submit" onclick="return confirm('Are you sure?')" class="btn btn-outline-danger" value="Delete Park" />
+    }
+</div>
+<br />  
+
+@*@if (Model.PreviousParkId != null)
+{
+    <div>
+        <a href="@Url.Action("ViewPark", new { id = Model.PreviousParkId })">Previous Park</a>
     </div>
+}
+
+@if (Model.NextParkId != null)
+{
+    <div>
+        <a href="@Url.Action("ViewPark", new { id = Model.NextParkId })">Next Park</a>
+    </div>
+}
+*@
+@if (Model.PreviousParkId != null || Model.NextParkId != null)
+{
+    <div class="button-container-pre-next">
+        @if (Model.PreviousParkId != null)
+        {
+            <a href="@Url.Action("ViewPark", new { id = Model.PreviousParkId })" class="btn btn-outline-primary custom-btn"><i class="fas fa-chevron-left"></i>Previous</a>
+        }
+
+        @if (Model.NextParkId != null)
+        {
+            <a href="@Url.Action("ViewPark", new { id = Model.NextParkId })" class="btn btn-outline-primary custom-btn">Next<i class="fas fa-chevron-right"></i></a>
+        }
+    </div>
+}
+<br />
+<div class="park-details">
+    <h2>@Model.Park.FullName</h2>
+    <img src="@Model.Park.PhotoURL" alt="@Model.Park.FullName" class="park-photo" />
+</div>
+
+
+
+
+
+
 
 
 
