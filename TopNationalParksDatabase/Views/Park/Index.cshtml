@@ -20,7 +20,7 @@
 <table class="table" id ="myTable">
     <tr>
         @*<th>Park ID</th>   *@   
-        <th onclick="sortTable(1)" class="sortable">Sort Parks By Name</th>
+        <th onclick="sortTable(0)" class="sortable">Sort Parks By Name</th>
         <th>Park Code</th>
         <th>Phone Number</th>
         <th>Email Address</th>
@@ -31,7 +31,7 @@
     {
         <tr>
             @*<td><a href="/Park/ViewPark/@park.ParkID" class="btn btn-outline-primary custom-btn">@park.ParkID</a></td>*@
-            <td><a href="/Park/ViewPark/@park.ParkID" class="btn btn-outline-primary custom-btn">@park.FullName</a></td>
+            <td><a href="/Park/ViewPark/@park.FullName" class="btn btn-outline-primary custom-btn">@park.FullName</a></td>
             <td>@park.ParkCode</td>
             <td>@park.PhoneNumber</td>
             <td>@park.EmailAddress</td>
@@ -44,43 +44,43 @@
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
         table = document.getElementById("myTable");
         switching = true;
-        
+    
         dir = "asc";
-       
+    
         while (switching) {
             
-            switching = false;
+           switching = false;
             rows = table.rows;
-          
+      
             for (i = 1; i < (rows.length-1); i++) {
-              
+            
                 shouldSwitch = false;
                
                 x = rows[i].getElementsByTagName("TD")[n];
                 y = rows[i + 1].getElementsByTagName("TD")[n];
                
-                if (dir == "desc") {
+                if (dir == "asc") {
                     if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                        
+                      
                         shouldSwitch = true;
                         break;
                     }
-                } else if (dir == "asc") {
+                } else if (dir == "desc") {
                     if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                       
+                  
                         shouldSwitch = true;
                         break;
                     }
                 }
             }
             if (shouldSwitch) {
-               
-                rows[i].parentNode.insertBefore(rows[i],rows[i]);
+           
+                rows[i].parentNode.insertBefore(rows[i + 1],rows[i]);
                 switching = true;
-               
+           
                switchcount++;
             } else {
-               
+           
                 if (switchcount == 0 && dir == "asc") {
                     dir = "desc";
                     switching = true;
@@ -88,5 +88,48 @@
             }
         }
     }    
+
+    //function sortTable(n) {
+    //    var table, rows, switching, i, j, shouldSwitch, dir, switchcount = 0;
+    //    table = document.getElementById("myTable");
+    //    switching = true;
+    //    dir = "asc";
+
+    //    while (switching) {
+    //        switching = false;
+    //        rows = table.rows;
+    //        for (i = 1; i < rows.length-1; i++) {
+    //            shouldSwitch = false;
+    //            var firstRow = table.rows[1];
+    //            var secondRow=table.rows[2];
+    //            for (j = i+1 ; j < rows.length; j++) {
+    //                var x = rows[i].getElementsByTagName("TD")[n].innerHTML.toLowerCase();
+    //                var y = rows[j].getElementsByTagName("TD")[n].innerHTML.toLowerCase();
+    //                if (dir == "desc") {
+    //                    if (x > y) {
+    //                        shouldSwitch = true;
+    //                        break;
+    //                    }
+    //                } else if (dir == "asc") {
+    //                    if (x < y) {
+    //                        shouldSwitch = true;
+    //                        break;
+    //                    }
+    //                }
+    //            }
+    //            if (shouldSwitch) {
+    //               rows[i].parentNode.insertBefore(rows[j], rows[i]);
+    //                switching = true;
+    //                switchcount++;
+    //            }
+    //        }
+    //        if (switchcount == 0 && dir == "asc") {
+    //            dir = "desc";
+    //            switching = true;
+    //        }
+    //    }
+    //    table.rows[1] = firstRow;
+    //    table.rows[2] = secondRow;
+    //}
 
 </script>
