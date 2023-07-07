@@ -31,7 +31,7 @@
     {
         <tr>
             @*<td><a href="/Park/ViewPark/@park.ParkID" class="btn btn-outline-primary custom-btn">@park.ParkID</a></td>*@
-            <td><a href="/Park/ViewPark/@park.FullName" class="btn btn-outline-primary custom-btn">@park.FullName</a></td>
+            <td><a href="/Park/ViewPark/@park.ParkID" class="btn btn-outline-primary custom-btn">@park.FullName</a></td>
             <td>@park.ParkCode</td>
             <td>@park.PhoneNumber</td>
             <td>@park.EmailAddress</td>
@@ -41,7 +41,7 @@
 </table>
 <script>
     function sortTable(n) {
-        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        var table, rows, switching,i , x, y, shouldSwitch, dir, switchcount = 0;
         table = document.getElementById("myTable");
         switching = true;
     

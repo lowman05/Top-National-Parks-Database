@@ -17,5 +17,12 @@ namespace TopNationalParksDatabase
         public Park GetPreviousPark(int id);
 
         public Park GetNextPark(int id);
+
+        public IEnumerable<Park> GetAllParkCodes();
+
+        public IEnumerable<Park> GetAlertsByParkCode();
+        
+
+
     }
 }

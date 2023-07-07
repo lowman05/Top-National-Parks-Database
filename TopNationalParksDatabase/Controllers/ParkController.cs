@@ -1,7 +1,10 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
-
+using Org.BouncyCastle.Crypto.Tls;
+using System.Net.Http.Headers;
+using System.Text.Json;
 using TopNationalParksDatabase.Models;
+
 
 
 namespace TopNationalParksDatabase.Controllers
@@ -21,28 +24,28 @@ namespace TopNationalParksDatabase.Controllers
            return View (parks);
         }
 
-        //public IActionResult ViewPark(int id)
-        //{
-        //    var park = repo.GetPark(id);
 
-
-        //    return View(park);
-        //}
         public IActionResult ViewPark(int id)
         {
+            
             var park = repo.GetPark(id);
             var previousParkId = repo.GetPreviousPark(id)?.ParkID;
             var nextParkId = repo.GetNextPark(id)?.ParkID;
-
-            var parkViewModel = new ParkViewModel
+                    var parkViewModel = new ParkViewModel
             {
                 Park = park,
                 PreviousParkId = previousParkId,
                 NextParkId = nextParkId
             };
+            IEnumerable<Park> alerts = repo.GetAlertsByParkCode();
+            IEnumerable<Park> parkAlerts = alerts.Where(a => a.ParkCode !=null && a.ParkCode == park.ParkCode);
+            List<Park> parkAlertsList = parkAlerts.ToList();
+            parkViewModel.Alerts = parkAlertsList;
+
 
             return View(parkViewModel);
         }
+       
 
 
 

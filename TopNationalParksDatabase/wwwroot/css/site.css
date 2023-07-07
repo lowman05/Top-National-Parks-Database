@@ -199,3 +199,10 @@ h2{
     padding-right: 10px;
 }
 
+.alert {
+    background-color: #a64418;
+    border: 1px  groove;
+    color: cornsilk;
+    border-width: thick;
+    border-color: cornsilk;
+}

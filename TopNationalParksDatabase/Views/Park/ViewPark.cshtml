@@ -102,20 +102,8 @@
 </div>
 <br />  
 
-@*@if (Model.PreviousParkId != null)
-{
-    <div>
-        <a href="@Url.Action("ViewPark", new { id = Model.PreviousParkId })">Previous Park</a>
-    </div>
-}
 
-@if (Model.NextParkId != null)
-{
-    <div>
-        <a href="@Url.Action("ViewPark", new { id = Model.NextParkId })">Next Park</a>
-    </div>
-}
-*@
+
 @if (Model.PreviousParkId != null || Model.NextParkId != null)
 {
     <div class="button-container-pre-next">
@@ -131,10 +119,29 @@
     </div>
 }
 <br />
+<br />
+<h2>Alerts:</h2>
+<div class = "alert">
+@if (Model.Alerts.Any())
+{
+    <ul>
+        @foreach (var alert in Model.Alerts)
+        {
+            <li>@alert.Title - @alert.Description</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No alerts available.</p>
+}
+</div>
+<br />  
 <div class="park-details">
     <h2>@Model.Park.FullName</h2>
     <img src="@Model.Park.PhotoURL" alt="@Model.Park.FullName" class="park-photo" />
 </div>
+
 
 
 

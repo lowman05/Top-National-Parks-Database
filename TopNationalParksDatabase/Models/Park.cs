@@ -18,7 +18,10 @@
        public string CurrentSortOrder { get; set; }
         public IEnumerable<Park> ParkPhotos { get; set; }
         
-
+        public string Title { get; set; }
+        public string Description { get; set; }
+        
+       
        
     }
 }

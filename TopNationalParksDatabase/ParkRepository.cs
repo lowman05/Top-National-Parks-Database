@@ -1,6 +1,12 @@
 ﻿using Dapper;
 using System.Data;
+using System.Data.Common;
+using System.Net.Http.Headers;
+using System.Runtime.InteropServices.JavaScript;
+using System.Text.Json;
 using TopNationalParksDatabase.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace TopNationalParksDatabase
 {
@@ -10,6 +16,8 @@ namespace TopNationalParksDatabase
         public ParkRepository(IDbConnection conn)
         {
             _conn = conn;
+
+
         }
 
         public IEnumerable<Park> GetAllParks()
@@ -53,5 +61,59 @@ namespace TopNationalParksDatabase
         {
             return _conn.QueryFirstOrDefault<Park>("SELECT * FROM Parks WHERE ParkID > @id ORDER BY ParkID ASC LIMIT 1", new { id = id});
         }
+
+        public IEnumerable<Park> GetAllParkCodes()
+        {
+            return _conn.Query<Park>("SELECT ParkCode FROM PARKS");
+        }
+
+        public IEnumerable<Park> GetAlertsByParkCode()
+        {
+            var parkCodes = GetAllParkCodes();
+            var appSettingsJson = File.ReadAllText("appsettings.json");
+            var appSettings = JObject.Parse(appSettingsJson);
+            var apiKey = appSettings["apiKeyObj"]["apiKey"].ToString();
+
+           
+            List<Park> alerts = new List<Park>();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://developer.nps.gov/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                foreach (var parkCode in parkCodes)
+                {
+                    string alertURL = $"api/v1/alerts?parkCode={parkCode.ParkCode}&api_key={apiKey}";
+
+                    HttpResponseMessage response = client.GetAsync(alertURL).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string jsonString = response.Content.ReadAsStringAsync().Result;
+                        var alertResponse = JObject.Parse(jsonString);
+                        var data = alertResponse.GetValue("data").ToString();
+
+                        // Deserialize the alerts for the current park code
+                        var parkAlerts = JsonConvert.DeserializeObject<IEnumerable<Park>>(data);
+
+                        // Assign the park code to each alert
+                        foreach (var alert in parkAlerts)
+                        {
+                            alert.ParkCode = parkCode.ParkCode;
+                        }
+
+                        // Add the alerts to the list
+                        alerts.AddRange(parkAlerts);
+                    }
+                }
+            }
+
+            return alerts;
+        }
+
+
+
     }  
-}
+}       
